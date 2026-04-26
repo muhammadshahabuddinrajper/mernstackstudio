@@ -4,15 +4,15 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const links = [
-  { label: 'Services', href: '#services' },
-  { label: 'Work', href: '#work' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Services',  href: '#services'  },
+  { label: 'Showcase',  href: '#showcase'  },
+  { label: 'About',     href: '#about'     },
+  { label: 'Contact',   href: '#contact'   },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled,    setScrolled]    = useState(false);
+  const [mobileOpen,  setMobileOpen]  = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -28,10 +28,11 @@ export default function Navbar() {
         transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
         className={`fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-4 transition-all duration-500 sm:px-10 lg:px-14 ${
           scrolled
-            ? 'bg-ink/70 shadow-lg shadow-black/20 backdrop-blur-xl'
+            ? 'bg-ink/75 shadow-lg shadow-black/30 backdrop-blur-xl border-b border-white/5'
             : 'bg-transparent'
         }`}
       >
+        {/* Logo */}
         <a href="#" className="font-display text-lg font-bold tracking-[-0.02em] text-white sm:text-xl">
           <span className="text-gradient">MERN</span>STACKSTUDIO
         </a>
@@ -43,38 +44,23 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               data-cursor="pointer"
-              className="relative text-sm font-medium text-white/60 transition-colors hover:text-white"
+              className="group relative text-sm font-medium text-white/55 transition-colors hover:text-white"
             >
               {link.label}
+              <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-neon-blue transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
-          <a
-            href="#contact"
-            data-cursor="pointer"
-            className="magnetic-btn rounded-full bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm hover:bg-neon-blue hover:text-ink"
-          >
-            Let&apos;s Talk
-          </a>
         </div>
 
         {/* Mobile hamburger */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="flex flex-col gap-1.5 md:hidden"
+          className="flex flex-col gap-1.5 md:hidden p-1"
           aria-label="Toggle menu"
         >
-          <motion.span
-            animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            className="block h-0.5 w-6 bg-white"
-          />
-          <motion.span
-            animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="block h-0.5 w-6 bg-white"
-          />
-          <motion.span
-            animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-            className="block h-0.5 w-6 bg-white"
-          />
+          <motion.span animate={mobileOpen ? { rotate: 45,  y: 6  } : { rotate: 0, y: 0 }} className="block h-0.5 w-6 bg-white" />
+          <motion.span animate={mobileOpen ? { opacity: 0                                 } : { opacity: 1   }} className="block h-0.5 w-6 bg-white" />
+          <motion.span animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} className="block h-0.5 w-6 bg-white" />
         </button>
       </motion.nav>
 
@@ -82,29 +68,22 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-x-0 top-16 z-40 flex flex-col gap-6 bg-ink/95 px-6 py-8 backdrop-blur-xl md:hidden"
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.28 }}
+            className="fixed inset-x-0 top-16 z-40 flex flex-col gap-5 bg-ink/96 px-6 py-8 backdrop-blur-xl border-b border-white/5 md:hidden"
           >
             {links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="font-display text-2xl font-semibold text-white/80 transition-colors hover:text-white"
+                className="font-display text-2xl font-semibold text-white/75 transition-colors hover:text-white"
               >
                 {link.label}
               </a>
             ))}
-            <a
-              href="#contact"
-              onClick={() => setMobileOpen(false)}
-              className="mt-2 inline-flex items-center justify-center rounded-full bg-neon-blue px-6 py-3 text-sm font-semibold text-ink"
-            >
-              Let&apos;s Talk
-            </a>
           </motion.div>
         )}
       </AnimatePresence>
